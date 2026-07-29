@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="XUHENG 的个人数字名片。">
+  <meta name="theme-color" content="#111111">
+  <meta property="og:title" content="XUHENG — UENG">
+  <meta property="og:description" content="XUHENG 的个人数字名片与项目入口。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="share-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="XUHENG — UENG">
+  <meta name="twitter:description" content="XUHENG 的个人数字名片与项目入口。">
+  <meta name="twitter:image" content="share-cover.png">
+  <meta name="color-scheme" content="dark light">
+  <title>XUHENG — UENG</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css?v=70">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "XUHENG",
+    "alternateName": "UENG",
+    "description": "XUHENG 的个人数字名片与项目入口。"
+  }
+  </script>
+</head>
+<body>
+  <div class="loader" aria-hidden="true"><div><span>U</span><span>E</span><span>N</span><span>G</span></div><small>DIGITAL CARD</small></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
+  <main class="card" id="card">
+    <aside class="identity">
+      <div class="glow" aria-hidden="true"></div>
+      <header><a href="#" class="mark">UENG<sup>®</sup></a><span class="serial">NO. 001 / 2026</span></header>
+      <div class="monogram" aria-hidden="true">U</div>
+      <div class="identity-bottom">
+        <div class="availability"><i></i><span>ONLINE</span></div>
+        <p>PERSONAL<br>DIGITAL CARD</p>
+      </div>
+    </aside>
+
+    <section class="content">
+      <header class="content-head"><span>XUHENG</span><span id="clock">SHANGHAI / 00:00</span></header>
+      <div class="intro">
+        <p class="hello">你好，我是</p>
+        <h1>XUHENG<span>.</span></h1>
+        <p class="summary">这里是我的个人入口。<br>项目、想法，以及互联网里的其他位置。</p>
+      </div>
+
+      <div class="links-area">
+        <div class="area-label"><span>PLACES</span><span>我的链接</span></div>
+        <div class="link-list" id="linkList">
+          <a class="place no-script-link" href="#">
+            <span class="place-num">01</span><span class="place-name">UENG</span><small>PERSONAL INDEX</small><i>⌂</i>
+          </a>
+        </div>
+      </div>
+
+      <footer class="card-footer"><span>© 2026 XUHENG</span><button id="shareCard" type="button">SHARE ↗</button><button id="flipCard" type="button">ABOUT ↗</button></footer>
+    </section>
+
+    <section class="back" aria-hidden="true">
+      <button id="closeBack" aria-label="返回正面">×</button>
+      <div><span>ABOUT / 关于</span><h2>保持好奇，<br>慢慢生长。</h2><p>UENG 是 XUHENG 的个人索引。这里不定义职业，也不陈列履历，只保留真正想留下的内容。</p><div class="back-actions"><a href="xuheng.vcf" download>保存联系人 ↓</a><button id="copyLink" type="button">复制页面链接</button></div></div>
+      <button class="back-return" id="backReturn" type="button"><span>UENG®</span><span>BACK TO FRONT →</span></button>
+    </section>
+  </main>
+
+  <!-- 公开链接请在 links.js 中维护 -->
+  <script src="links.js?v=70"></script>
+  <script src="script.js?v=70"></script>
+</body>
+</html>
