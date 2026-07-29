@@ -27,6 +27,8 @@ function clock() {
 }
 clock(); setInterval(clock, 30000);
 
+const scene = document.querySelector('#scene');
+const cardTilt = document.querySelector('#cardTilt');
 const card = document.querySelector('#card');
 const cursor = document.querySelector('.cursor');
 function bindHover() {
@@ -44,7 +46,7 @@ if (!reduce && matchMedia('(hover: hover)').matches) {
   let mx = -50, my = -50, cx = -50, cy = -50, moved = false;
   addEventListener('pointermove', e => {
     mx = e.clientX; my = e.clientY;
-    const r = card.getBoundingClientRect();
+    const r = scene.getBoundingClientRect();
     document.documentElement.style.setProperty('--x', `${e.clientX - r.left}px`);
     document.documentElement.style.setProperty('--y', `${e.clientY - r.top}px`);
     if (!moved) { moved = true; cursor.classList.add('ready'); }
@@ -55,13 +57,13 @@ if (!reduce && matchMedia('(hover: hover)').matches) {
     requestAnimationFrame(follow);
   })();
   card.addEventListener('mousemove', e => {
-    if (card.classList.contains('flipped')) return;
-    const r = card.getBoundingClientRect();
+    if (scene.classList.contains('flipped')) return;
+    const r = scene.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - .5;
     const y = (e.clientY - r.top) / r.height - .5;
-    card.style.transform = `perspective(1600px) rotateX(${-y * .8}deg) rotateY(${x * .8}deg)`;
+    cardTilt.style.transform = `rotateX(${-y * .8}deg) rotateY(${x * .8}deg)`;
   });
-  card.addEventListener('mouseleave', () => card.style.transform = '');
+  card.addEventListener('mouseleave', () => cardTilt.style.transform = '');
 }
 
 const back = document.querySelector('.back');
@@ -69,32 +71,58 @@ const frontFocusables = [...document.querySelectorAll('.content a, .content butt
 const backFocusables = [...back.querySelectorAll('a, button')];
 function setFrontInert(inert) { frontFocusables.forEach(el => inert ? el.setAttribute('tabindex', '-1') : el.removeAttribute('tabindex')); }
 function trapBackFocus(e) {
-  if (e.key !== 'Tab' || !card.classList.contains('flipped')) return;
+  if (e.key !== 'Tab' || !scene.classList.contains('flipped')) return;
   const first = backFocusables[0], last = backFocusables[backFocusables.length - 1];
   if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
   else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
 }
+let flipAnimation;
+function animateScene(from, to, done) {
+  if (flipAnimation) flipAnimation.cancel();
+  card.style.removeProperty('transition');
+  scene.classList.add('turning');
+  if (reduce || document.hidden || !card.animate) {
+    card.style.transition = 'none';
+    scene.classList.toggle('flipped', to === 180);
+    card.getBoundingClientRect();
+    scene.classList.remove('turning');
+    done();
+    return;
+  }
+  card.style.removeProperty('transition');
+  flipAnimation = card.animate(
+    [{ transform: `rotateY(${from}deg)` }, { transform: `rotateY(${to}deg)` }],
+    { duration: 820, easing: 'cubic-bezier(.72,0,.18,1)' }
+  );
+  flipAnimation.onfinish = () => {
+    scene.classList.toggle('flipped', to === 180);
+    scene.classList.remove('turning');
+    done();
+  };
+  flipAnimation.oncancel = () => scene.classList.remove('turning');
+}
 function showBack() {
-  card.style.transform = '';
-  card.classList.add('flipped');
+  cardTilt.style.transform = '';
   back.setAttribute('aria-hidden', 'false');
   document.body.classList.add('back-open');
   setFrontInert(true);
-  closeBack.focus();
+  animateScene(0, 180, () => closeBack.focus());
 }
 function hideBack() {
-  card.classList.remove('flipped');
-  back.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('back-open');
   setFrontInert(false);
-  flipCard.focus();
+  animateScene(180, 360, () => {
+    scene.classList.remove('flipped');
+    back.setAttribute('aria-hidden', 'true');
+    flipCard.focus();
+  });
 }
 flipCard.addEventListener('click', showBack);
 closeBack.addEventListener('click', hideBack);
 backReturn.addEventListener('click', hideBack);
 addEventListener('keydown', e => {
   trapBackFocus(e);
-  if (e.key === 'Escape' && card.classList.contains('flipped')) hideBack();
+  if (e.key === 'Escape' && scene.classList.contains('flipped')) hideBack();
 });
 
 const originalShareLabel = shareCard.textContent;
