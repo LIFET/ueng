@@ -6,3 +6,7 @@
 @media(max-width:760px){.identity{height:34svh;min-height:235px}.content{min-height:calc(66svh - 24px)}.monogram{font-size:48vw;left:9px;bottom:-5vw}.identity-bottom{z-index:4;padding-top:14px;background:linear-gradient(transparent,#191919 35%)}.availability{position:relative;z-index:5}.link-list.few .place{height:62px}.link-list.few .place-name{font-size:16px}.back-open{overflow:hidden;height:100svh}}
 .back-actions{grid-column:3;margin-top:28px;border-top:1px solid #aaa;display:flex;flex-direction:column}.back-actions a,.back-actions button{color:inherit;text-decoration:none;border:0;border-bottom:1px solid #aaa;background:none;text-align:left;padding:12px 0;font-size:11px;cursor:pointer}.back-actions a:hover,.back-actions button:hover{padding-left:8px}.card-footer button{color:inherit}.no-script-link{display:grid}
 @media(max-width:760px){.back-actions{grid-column:1;margin-top:12px}.back-actions a,.back-actions button{font-size:12px}.card-footer{gap:10px}.card-footer button{white-space:nowrap}}
+
+/* Safari/WebKit: avoid nested transform transition getting stuck off-canvas */
+.back{display:none!important;transform:none!important}
+.card.flipped .back{display:flex!important;transform:none!important;opacity:1!important}
